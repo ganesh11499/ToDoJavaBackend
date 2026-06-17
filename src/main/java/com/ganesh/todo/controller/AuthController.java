@@ -1,0 +1,31 @@
+package com.ganesh.todo.controller;
+import com.ganesh.todo.dto.RegisterRequest;
+import com.ganesh.todo.entity.ApiResponse;
+import com.ganesh.todo.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse> register(
+            @RequestBody RegisterRequest request) {
+
+        ApiResponse response = ApiResponse.builder()
+                .status(200)
+                .message("User registered successfully")
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+}
