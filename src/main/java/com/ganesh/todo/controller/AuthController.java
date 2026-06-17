@@ -1,7 +1,11 @@
 package com.ganesh.todo.controller;
+import com.ganesh.todo.dto.LoginRequest;
+import com.ganesh.todo.dto.LoginResponse;
 import com.ganesh.todo.dto.RegisterRequest;
 import com.ganesh.todo.entity.ApiResponse;
+import com.ganesh.todo.service.AuthService;
 import com.ganesh.todo.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,7 @@ import java.io.IOException;
 public class AuthController {
 
     private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(
@@ -28,4 +33,7 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
+
+
+
 }
