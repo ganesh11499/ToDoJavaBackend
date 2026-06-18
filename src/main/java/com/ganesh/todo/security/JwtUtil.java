@@ -2,11 +2,13 @@ package com.ganesh.todo.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
 
+@Component
 public class JwtUtil {
 
     private static final String SECRET =
