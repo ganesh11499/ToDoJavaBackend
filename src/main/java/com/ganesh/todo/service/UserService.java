@@ -21,21 +21,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String register(RegisterRequest request,
-                            MultipartFile image)
-            throws IOException{
+    public String register(RegisterRequest request) {
 
         if(userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email Already Exists");
         }
 
-        String imagePath = saveImage(image);
+//        String imagePath = saveImage(image);
 
         User user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .mobileNumber(request.getMobileNumber())
-                .profileImage(imagePath)
+                .active(true)
+//                .profileImage(imagePath)
                 .password(
                         passwordEncoder.encode(
                                 request.getPassword()))

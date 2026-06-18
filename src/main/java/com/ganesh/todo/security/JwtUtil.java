@@ -2,11 +2,14 @@ package com.ganesh.todo.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
 
+@Component
 public class JwtUtil {
 
     private static final String SECRET =
@@ -28,5 +31,29 @@ public class JwtUtil {
                                         + 86400000))
                 .signWith(key)
                 .compact();
+    }
+
+    public String extractUsername(String token) {
+
+        return Jwts.parser()
+                .verifyWith((SecretKey) key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
+
+    public boolean validateToken(String token) {
+
+        try {
+            Jwts.parser()
+                    .verifyWith((SecretKey) key)
+                    .build()
+                    .parseSignedClaims(token);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

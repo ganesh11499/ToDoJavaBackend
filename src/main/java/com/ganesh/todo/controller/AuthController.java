@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,7 +26,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(
-            @RequestBody RegisterRequest request) {
+
+           @Valid @RequestBody RegisterRequest request) {
+
+        String message = userService.register(request);
 
         ApiResponse response = ApiResponse.builder()
                 .status(200)
@@ -32,6 +37,24 @@ public class AuthController {
                 .build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        LoginResponse response = authService.login(request);
+
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("status", 200);
+        result.put("message", "Login Successful");
+        result.put("id", response.getId());
+        result.put("fullName", response.getFullName());
+        result.put("email", response.getEmail());
+        result.put("token", response.getToken());
+
+        return ResponseEntity.ok(result);
     }
 
 
