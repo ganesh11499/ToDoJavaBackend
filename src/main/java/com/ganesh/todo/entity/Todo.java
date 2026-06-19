@@ -10,17 +10,20 @@ import java.time.LocalDate;
 @Table(name = "todos")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
+
 public class Todo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(length = 1000)
     private String description;
 
     private LocalDate dueDate;
@@ -31,4 +34,6 @@ public class Todo extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
 }

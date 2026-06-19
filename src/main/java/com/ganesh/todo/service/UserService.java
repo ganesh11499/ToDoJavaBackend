@@ -27,7 +27,7 @@ public class UserService {
             throw new RuntimeException("Email Already Exists");
         }
 
-
+//        String imagePath = saveImage(image);
 
         User user = User.builder()
                 .fullName(request.getFullName())

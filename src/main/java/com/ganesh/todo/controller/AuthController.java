@@ -26,9 +26,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(
-            @RequestBody RegisterRequest request) {
 
-        userService.register(request); // SAVE USER
+           @Valid @RequestBody RegisterRequest request) {
+
+        String message = userService.register(request);
 
         ApiResponse response = ApiResponse.builder()
                 .status(200)
@@ -45,9 +46,13 @@ public class AuthController {
         LoginResponse response = authService.login(request);
 
         Map<String, Object> result = new HashMap<>();
+
         result.put("status", 200);
         result.put("message", "Login Successful");
-        result.put("data", response);
+        result.put("id", response.getId());
+        result.put("fullName", response.getFullName());
+        result.put("email", response.getEmail());
+        result.put("token", response.getToken());
 
         return ResponseEntity.ok(result);
     }

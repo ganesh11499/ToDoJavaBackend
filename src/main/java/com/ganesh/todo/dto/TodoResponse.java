@@ -1,25 +1,19 @@
 package com.ganesh.todo.dto;
 
+
 import com.ganesh.todo.enums.TodoStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class TodoRequest {
+@Builder
+public class TodoResponse {
 
-    @NotBlank
+    private Long id;
     private String title;
-
     private String description;
-
-    @NotNull
     private LocalDate dueDate;
-
-    @NotNull
     private TodoStatus status;
-
-
 }
