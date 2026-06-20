@@ -25,6 +25,32 @@ public class TodoService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
+    public TodoResponse updateTodo(
+            Long id,
+            TodoRequest request
+    ){
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Todo not found"));
+
+                todo.setTitle(request.getTitle());
+                todo.setDescription(request.getDescription());
+                todo.setDueDate(request.getDueDate());
+                todo.setStatus(request.getStatus());
+
+                Todo updatedTodo =
+                        todoRepository.save(todo);
+
+                return TodoResponse.builder()
+                        .id(updatedTodo.getId())
+                        .title(updatedTodo.getTitle())
+                        .description(updatedTodo.getDescription())
+                        .dueDate(updatedTodo.getDueDate())
+                        .status(updatedTodo.getStatus())
+                        .build();
+
+    }
+
     public Todo saveTodo(
             TodoRequest request,
             String authHeader) {
@@ -131,5 +157,17 @@ public class TodoService {
                 .dueDate(todo.getDueDate())
                 .status(todo.getStatus())
                 .build();
+    }
+
+    public String deleteTodo(Long id){
+
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Todo Not Found"));
+
+        todoRepository.delete(todo);
+
+        return "Todo Deleted Successfully";
+
     }
 }
