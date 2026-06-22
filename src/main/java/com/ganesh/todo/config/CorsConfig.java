@@ -16,7 +16,7 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
-        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("https://todo-react-frontend-delta.vercel.app/");
 
         config.addAllowedHeader("*");
 
